@@ -6,32 +6,54 @@
 package m00;
 
 /**
+ * @author Veronika Pencaka veronika.pencaka@gmail.com Created: 18.09.2015 Last
+ * modified: 18.09.2015
  *
- * @author Veronika
+ * Describe class
  */
 public class Search {
-	/**
-	 * Find the first occurrence of x in sorted array a.
-	 * @param x value to find
-	 * @param a array sorted in increasing order (a[0] <= a[1] <= ... <= a[n-1])
-	 * @return lowest i such that a[i]==x, or -1 if x not found in a.
-	 */
-	public static int find(int x, int[] a) {
-		//call binarySearch
-		return 0;
-	} 
-	
 
-	public static int binarySearch(int x, int[] a) {
-		// TODO finish implementation of binary search method
-		
-		int mid = a.length / 2;
-		if (x < a[mid]) {
-			return binarySearch(x, a /*not a but left half of a */);
-		} else if (x > a[mid]) {
-			return binarySearch(x, a /*not a but right half of a */);
-		} else {
-			return mid; // because x == a[mid], i.e. we found it!
-		}
+    /**
+     * Find the first occurrence of x in sorted array a.
+     *
+     * @param x value to find
+     * @param a array sorted in increasing order (a[0] <= a[1] <= ... <= a[n-1])
+     * @r
+     * eturn lowest i such that a[i]==x, or -1 if x not found in a.
+     */
+    public static int find(int x, int[] a) {
+        return binarySearch(x, a);
+    }
+
+    public static int binarySearch(int x, int[] a) {
+        if (isSorted(a)) {
+            int lower = 0;
+            int upper = a.length - 1;
+            while (lower <= upper) {
+                int mid = lower + (upper - lower) / 2;
+                if (x < a[mid]) {
+                    upper = mid - 1;
+                } else if (x > a[mid]) {
+                    lower = mid + 1;
+                } else {
+                    if (mid != 0 && a[mid] == a[mid - 1]) {
+                        upper = mid - 1;
+                    } else {
+                        return mid; 
+                    }
+                }
+            }
         }
+        return -1;
+    }
+
+    public static boolean isSorted(int[] a) {
+        for (int i = 1; i < a.length; i++) {
+            if (a[i - 1] > a[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
